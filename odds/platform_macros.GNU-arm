@@ -1,0 +1,7 @@
+no_hidden_visibility=1
+cross-compile=1
+TAO_IDL_PREPROCESSOR=g++
+debug = 0
+optimize = 0
+inline = 1
+include $(ACE_ROOT)/include/makeinclude/platform_android.GNU
