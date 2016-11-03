@@ -7,14 +7,15 @@
 HOME=/home/developer
 BUILD_TOP=/home/developer/arm-tools
 
-export NDK=/home/ggrobe/tools/crystax-ndk-10.3.2
+#export NDK=/home/developer/crystax-ndk-10.3.2
 export ANDROID_ARCH=arm
-export ANDROID_TOOLCHAIN=/opt/android-toolchain
 export CROSS_COMPILE=arm-linux-androideabi-
-export SYSROOT=${NDK}/platforms/android-21/arch-${ANDROID_ARCH}
-export PATH=${ANDROID_TOOLCHAIN}/bin:${ANDROID}:${PATH}
+export TOOLCHAIN=/opt/crystax-ndk
+#export SYSROOT=${NDK}/platforms/android-21/arch-${ANDROID_ARCH}
+export SYSROOT=${TOOLCHAIN}/sysroot
+export PATH=${TOOLCHAIN}/bin:${PATH}
 
-export CFLAGS="${CFLAGS} --sysroot=${SYSROOT} -I${SYSROOT}/usr/include -I${ANDROID_TOOLCHAIN}/include"
+export CFLAGS="${CFLAGS} --sysroot=${SYSROOT} -I${SYSROOT}/usr/include -I${TOOLCHAIN}/include"
 export CPPFLAGS="${CFLAGS}"
 export LDFLAGS="${LDFLAGS} -L${SYSROOT}/usr/lib -L/opt/android-prefix/lib"
 export LD_LIBRARY_PATH=${ACE_ROOT}/lib:${DDS_ROOT}/lib:${LD_LIBRARY_PATH}
@@ -22,7 +23,6 @@ export LD_LIBRARY_PATH=${ACE_ROOT}/lib:${DDS_ROOT}/lib:${LD_LIBRARY_PATH}
 set_build_env() {
 
 	cd $BUILD_TOP/ACE_wrappers
-	#cd ACE_wrappers
 	./MPC/clone_build_tree.pl arm
 	cd build/arm
 
@@ -58,17 +58,21 @@ generate_makefiles() {
 	perl ${ACE_ROOT}/bin/mwc.pl -type gnuace TAO_ACE.mwc
 
 	cd ${DDS_ROOT}
-	${MPC_ROOT}/clone_build_tree.pl arm
+	# isn't this already done above?
+	#${MPC_ROOT}/clone_build_tree.pl arm
 	perl ${ACE_ROOT}/bin/mwc.pl DDS.mwc -type gnuace
 }
 
 compile() {
+	echo "calling make -C ace"
 	cd ${ACE_ROOT}
 	make -C ace
 
+	echo "calling TAO_ROOT make"
 	cd ${TAO_ROOT}
 	make
 
+	echo "calling DDS_ROOT make"
 	cd ${DDS_ROOT}
 	make
 }

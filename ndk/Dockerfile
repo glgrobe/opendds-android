@@ -19,7 +19,7 @@ RUN cd /home/developer && \
 	mkdir /opt/crystax-ndk && \
 	$CRY_DIR/build/tools/make-standalone-toolchain.sh \
 		--system=linux-x86_64 \
-		--toolchain=arm-linux-androideabi-5 \
+		--toolchain=arm-linux-androideabi-4.9 \
 		--platform=android-21 \
 		--install-dir=$CRY_DEST && \
 	chown -R developer:developer /home/developer && \
