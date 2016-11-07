@@ -47,10 +47,10 @@ configure_ace() {
 
 generate_makefiles() {
 	cd ${TAO_ROOT}
-	perl ../bin/mwc.pl -type gnuace ./TAO_ACE.mwc
+	perl ${ACE_ROOT}/bin/mwc.pl -type gnuace ./TAO_ACE.mwc
 
 	cd ${DDS_ROOT}
-	perl ../bin/mwc.pl DDS.mwc -type gnuace
+	perl ${ACE_ROOT}/bin/mwc.pl DDS.mwc -type gnuace
 }
 
 compile() {

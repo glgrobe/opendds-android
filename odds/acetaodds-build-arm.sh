@@ -40,26 +40,24 @@ set_build_env() {
 configure_ace() {
 	cp $HOME/config-android-crystaxNDK.h ${ACE_ROOT}/ace
 
-	echo '#include "ace/config-android-crystaxNDK.h"' > ${ACE_ROOT}/ace/config.h
+	echo '#include "ace/config-android-crystaxNDK.h"' > \
+		${ACE_ROOT}/ace/config.h
 
 	cp $HOME/platform_macros.GNU-arm \
 		${ACE_ROOT}/include/makeinclude/platform_macros.GNU
 
 	cd ${ACE_ROOT}/bin
-	#ln -sf ../../x86_64/bin/tao_idl
-	ln -sf ../TAO/TAO_IDL/tao_idl
-
-	cd ${DDS_ROOT}/bin
-	ln -sf ../../x86_64/bin/opendds_idl
+	ln -sf ../../x86_64/bin/tao_idl
 }
 
 generate_makefiles() {
 	cd ${TAO_ROOT}
 	perl ${ACE_ROOT}/bin/mwc.pl -type gnuace TAO_ACE.mwc
 
+	cd ${DDS_ROOT}/bin
+	ln -sf ../../x86_64/bin/opendds_idl
+
 	cd ${DDS_ROOT}
-	# isn't this already done above?
-	#${MPC_ROOT}/clone_build_tree.pl arm
 	perl ${ACE_ROOT}/bin/mwc.pl DDS.mwc -type gnuace
 }
 
@@ -75,6 +73,9 @@ compile() {
 	echo "calling DDS_ROOT make"
 	cd ${DDS_ROOT}
 	make
+
+	cd ${ACE_ROOT}/bin
+	ln -sf ../TAO/TAO_IDL/tao_idl 
 }
 
 # Files are downloaded and unpacked by acetaodds-build-x86_64.sh
@@ -83,11 +84,4 @@ set_build_env
 configure_ace
 generate_makefiles
 compile
-
-
-
-
-
-
-
 
