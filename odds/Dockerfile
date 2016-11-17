@@ -9,7 +9,7 @@ ADD acetaodds-build-arm.sh /home/developer
 ADD acetaodds-build-x86_64.sh /home/developer
 ADD platform_macros.GNU-arm /home/developer
 ADD platform_macros.GNU-x86_64 /home/developer
-ADD config-android-crystaxNDK.h /home/developer
+ADD config-android.h /home/developer
 
 RUN chown -R developer:developer /home/developer && \
 	chmod -R 755 /home/developer 

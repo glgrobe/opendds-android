@@ -38,10 +38,10 @@ set_build_env() {
 }
 
 configure_ace() {
-	cp $HOME/config-android-crystaxNDK.h ${ACE_ROOT}/ace
+	# This config-android.h has been modified for latern Android releases.
+	cp $HOME/config-android.h ${ACE_ROOT}/ace
 
-	echo '#include "ace/config-android-crystaxNDK.h"' > \
-		${ACE_ROOT}/ace/config.h
+	echo '#include "ace/config-android.h"' > ${ACE_ROOT}/ace/config.h
 
 	cp $HOME/platform_macros.GNU-arm \
 		${ACE_ROOT}/include/makeinclude/platform_macros.GNU
