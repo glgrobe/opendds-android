@@ -4,7 +4,8 @@ MAINTAINER Gary Grobe <gary.l.grobe@nasa.gov>
 
 LABEL Description="Installs Crystax toolchain for Android from Gentoo base."
 
-RUN emerge-webrsync && \
+RUN mkdir /usr/portage && \
+	emerge-webrsync && \
 	emerge tar && \
 	/usr/sbin/useradd -d /home/developer -m -s /bin/bash developer
 
