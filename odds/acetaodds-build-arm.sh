@@ -38,7 +38,7 @@ set_build_env() {
 }
 
 configure_ace() {
-	# This config-android.h has been modified for latern Android releases.
+	# This config-android.h has been modified for later Android releases.
 	cp $HOME/config-android.h ${ACE_ROOT}/ace
 
 	echo '#include "ace/config-android.h"' > ${ACE_ROOT}/ace/config.h
