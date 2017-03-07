@@ -2,9 +2,19 @@
 FROM gentoo/stage3-amd64-nomultilib
 MAINTAINER Gary Grobe <gary.l.grobe@nasa.gov>
 
-LABEL Description="Installs Crystax toolchain for Android from Gentoo base."
+LABEL Description="Installs Crystax toolchain for Android on a Gentoo base."
 
 RUN mkdir -p /usr/portage && \
+	mkdir -p /etc/portage/repos.conf && \
+	mkdir -p /usr/portage/metadata && \
+	echo "masters = gentoo" > /usr/portage/metadata/layout.conf && \
+	echo "[DEFAULT]" > /etc/portage/repos.conf/gentoo.conf && \
+	echo "main-repo = gentoo" >> /etc/portage/repos.conf/gentoo.conf && \
+	echo "" >> /etc/portage/repos.conf/gentoo.conf && \
+	echo "[gentoo]" >> /etc/portage/repos.conf/gentoo.conf && \
+	echo "location = /usr/portage" >> /etc/portage/repos.conf/gentoo.conf && \
+	echo "sync-type = webrsync" >> /etc/portage/repos.conf/gentoo.conf && \
+	echo "sync-uri = rsync://rsync.gentoo.org/gentoo-portage" >> /etc/portage/repos.conf/gentoo.conf && \
 	emerge-webrsync && \
 	emerge tar && \
 	/usr/sbin/useradd -d /home/developer -m -s /bin/bash developer
