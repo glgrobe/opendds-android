@@ -6,6 +6,7 @@
 
 HOME=/home/developer
 BUILD_TOP=/home/developer/arm-tools
+DDS_REL=OpenDDS-3.9
 
 #export NDK=/home/developer/crystax-ndk-10.3.2
 export ANDROID_ARCH=arm
@@ -30,7 +31,7 @@ set_build_env() {
 	export MPC_ROOT=${ACE_ROOT}/MPC
 	export TAO_ROOT=${ACE_ROOT}/TAO
 
-	cd $BUILD_TOP/OpenDDS-3.9
+	cd $BUILD_TOP/${DDS_REL}
 	${MPC_ROOT}/clone_build_tree.pl arm
 	cd build/arm
 
