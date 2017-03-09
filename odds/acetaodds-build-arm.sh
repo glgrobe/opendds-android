@@ -6,7 +6,7 @@
 
 HOME=/home/developer
 BUILD_TOP=/home/developer/arm-tools
-DDS_REL=OpenDDS-3.9
+DDS_REL=OpenDDS-3.10
 
 #export NDK=/home/developer/crystax-ndk-10.3.2
 export ANDROID_ARCH=arm

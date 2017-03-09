@@ -5,15 +5,15 @@
 
 HOME=/home/developer
 BUILD_TOP=/home/developer/arm-tools
-DDS_REL=OpenDDS-3.9
+DDS_REL=OpenDDS-3.10
 
 unpack_files() {
 	cd $BUILD_TOP
 
 	# Prepare source for this build as well as the one to follow for the arm.
 	local HTTP_AT=http://download.ociweb.com/TAO-2.2a
-	#local HTTP_DDS=http://download.ociweb.com/OpenDDS
-	local HTTP_DDS=download.ociweb.com/OpenDDS/previous-releases
+	local HTTP_DDS=http://download.ociweb.com/OpenDDS
+	#local HTTP_DDS=download.ociweb.com/OpenDDS/previous-releases
 	local FILE_AT=ACE+TAO-2.2a_with_latest_patches_NO_makefiles.tar.gz
 	local FILE_DDS=${DDS_REL}.tar.gz
 
