@@ -5,7 +5,7 @@
 
 HOME=/home/developer
 BUILD_TOP=/home/developer/arm-tools
-DDS_REL=OpenDDS-3.10
+DDS_REL=OpenDDS-3.11
 
 unpack_files() {
 	cd $BUILD_TOP
@@ -26,6 +26,7 @@ unpack_files() {
 
 set_build_env() {
 	cd ACE_wrappers
+
 	./MPC/clone_build_tree.pl x86_64
 	cd build/x86_64
 
@@ -33,8 +34,14 @@ set_build_env() {
 	export MPC_ROOT=${ACE_ROOT}/MPC
 	export TAO_ROOT=${ACE_ROOT}/TAO
 
+	echo "ACE_ROOT = $ACE_ROOT"
+	echo "MPC_ROOT = $MPC_ROOT"
+	echo "TAO_ROOT = $TAO_ROOT"
+
 	cd $BUILD_TOP/${DDS_REL}
+	
 	${MPC_ROOT}/clone_build_tree.pl x86_64
+
 	cd build/x86_64
 
 	export DDS_ROOT=$PWD

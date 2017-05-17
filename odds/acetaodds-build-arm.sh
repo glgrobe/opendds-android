@@ -6,13 +6,13 @@
 
 HOME=/home/developer
 BUILD_TOP=/home/developer/arm-tools
-DDS_REL=OpenDDS-3.10
+DDS_REL=OpenDDS-3.11
 
 #export NDK=/home/developer/crystax-ndk-10.3.2
 export ANDROID_ARCH=arm
 export CROSS_COMPILE=arm-linux-androideabi-
 export TOOLCHAIN=/opt/crystax-ndk
-#export SYSROOT=${NDK}/platforms/android-21/arch-${ANDROID_ARCH}
+#export SYSROOT=${NDK}/platforms/android-24/arch-${ANDROID_ARCH}
 export SYSROOT=${TOOLCHAIN}/sysroot
 export PATH=${TOOLCHAIN}/bin:${PATH}
 

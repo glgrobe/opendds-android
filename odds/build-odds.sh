@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 echo "Building OpenDDS for Android ..."
 
 cd /home/developer
@@ -11,4 +10,5 @@ echo "PWD: $(pwd)"
 /home/developer/acetaodds-build-x86_64.sh 
 
 /home/developer/acetaodds-build-arm.sh 
+
 

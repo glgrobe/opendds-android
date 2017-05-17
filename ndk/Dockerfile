@@ -19,6 +19,10 @@ RUN mkdir -p /usr/portage && \
 	emerge tar && \
 	/usr/sbin/useradd -d /home/developer -m -s /bin/bash developer
 
+#	mkdir -p /home/developer/arm-tools && \
+#	chown -R developer:developer /home/developer && \
+#	chmod -R 755 /home/developer 
+
 ENV CRY_DIR=/home/developer/crystax-ndk-10.3.2 \
 	CRY_WEB=https://www.crystax.net/download \
 	CRY_FILE=crystax-ndk-10.3.2-linux-x86_64.tar.xz \
@@ -32,8 +36,6 @@ RUN cd /home/developer && \
 		--system=linux-x86_64 \
 		--toolchain=arm-linux-androideabi-4.9 \
 		--platform=android-21 \
-		--install-dir=$CRY_DEST && \
-	chown -R developer:developer /home/developer && \
-	chmod -R 755 /home/developer
+		--install-dir=$CRY_DEST 
 
 
