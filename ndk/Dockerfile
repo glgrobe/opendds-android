@@ -15,27 +15,35 @@ RUN mkdir -p /usr/portage && \
 	echo "location = /usr/portage" >> /etc/portage/repos.conf/gentoo.conf && \
 	echo "sync-type = webrsync" >> /etc/portage/repos.conf/gentoo.conf && \
 	echo "sync-uri = rsync://rsync.gentoo.org/gentoo-portage" >> /etc/portage/repos.conf/gentoo.conf && \
-	emerge-webrsync && \
-	emerge tar && \
+	emerge --sync && \
+	emerge gcc && \
+	gcc-config 2 && \
+	chmod 777 /opt && \
 	/usr/sbin/useradd -d /home/developer -m -s /bin/bash developer
 
-#	mkdir -p /home/developer/arm-tools && \
-#	chown -R developer:developer /home/developer && \
-#	chmod -R 755 /home/developer 
+#	emerge-webrsync && 
+#	emerge tar && 
+
+USER developer 
 
 ENV CRY_DIR=/home/developer/crystax-ndk-10.3.2 \
-	CRY_WEB=https://www.crystax.net/download \
-	CRY_FILE=crystax-ndk-10.3.2-linux-x86_64.tar.xz \
+	CRY_WEB=https://dl.crystax.net/builds/912/linux \
+	CRY_FILE=crystax-ndk-10.3.2-b912-linux-x86_64.tar.xz \
 	CRY_DEST=/opt/crystax-ndk
 
 RUN cd /home/developer && \
 	wget $CRY_WEB/$CRY_FILE && \
-	tar xvfJ $CRY_FILE && \
-	mkdir /opt/crystax-ndk && \
-	$CRY_DIR/build/tools/make-standalone-toolchain.sh \
+	tar xf ./$CRY_FILE && \
+	cd $CRY_DIR
+
+# this make apparently needs to be separated from previous RUN commands
+RUN	$CRY_DIR/build/tools/make-standalone-toolchain.sh \
 		--system=linux-x86_64 \
-		--toolchain=arm-linux-androideabi-4.9 \
-		--platform=android-21 \
+		--toolchain=aarch64-linux-android-5 \
+		--platform=android-24 \
 		--install-dir=$CRY_DEST 
 
 
+#		arm-linux-androideabi-5 
+#	tar xvfJ $CRY_FILE && 
+#	mkdir /opt/crystax-ndk

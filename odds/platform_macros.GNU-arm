@@ -1,6 +1,7 @@
 no_hidden_visibility=1
 cross-compile=1
 TAO_IDL_PREPROCESSOR=g++
+ANDROID_ABI ?= arm64-v8a
 debug = 0
 optimize = 0
 inline = 1

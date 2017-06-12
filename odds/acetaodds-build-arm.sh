@@ -10,16 +10,16 @@ DDS_REL=OpenDDS-3.11
 
 #export NDK=/home/developer/crystax-ndk-10.3.2
 export ANDROID_ARCH=arm
-export CROSS_COMPILE=arm-linux-androideabi-
+#export CROSS_COMPILE=arm-linux-androideabi-
 export TOOLCHAIN=/opt/crystax-ndk
 #export SYSROOT=${NDK}/platforms/android-24/arch-${ANDROID_ARCH}
-export SYSROOT=${TOOLCHAIN}/sysroot
-export PATH=${TOOLCHAIN}/bin:${PATH}
+export SYSROOT=$TOOLCHAIN/sysroot
+export PATH=$TOOLCHAIN/bin:${PATH}
 
 export CFLAGS="${CFLAGS} --sysroot=${SYSROOT} -I${SYSROOT}/usr/include -I${TOOLCHAIN}/include"
 export CPPFLAGS="${CFLAGS}"
 export LDFLAGS="${LDFLAGS} -L${SYSROOT}/usr/lib -L/opt/android-prefix/lib"
-export LD_LIBRARY_PATH=${ACE_ROOT}/lib:${DDS_ROOT}/lib:${LD_LIBRARY_PATH}
+
 
 set_build_env() {
 
@@ -28,54 +28,57 @@ set_build_env() {
 	cd build/arm
 
 	export ACE_ROOT=$PWD
-	export MPC_ROOT=${ACE_ROOT}/MPC
-	export TAO_ROOT=${ACE_ROOT}/TAO
+	export MPC_ROOT=$ACE_ROOT/MPC
+	export TAO_ROOT=$ACE_ROOT/TAO
+	export LD_LIBRARY_PATH=$ACE_ROOT/lib:$DDS_ROOT/lib:$LD_LIBRARY_PATH
 
-	cd $BUILD_TOP/${DDS_REL}
-	${MPC_ROOT}/clone_build_tree.pl arm
+	cd $BUILD_TOP/$DDS_REL
+	$MPC_ROOT/clone_build_tree.pl arm
 	cd build/arm
 
 	export DDS_ROOT=$PWD
 }
 
 configure_ace() {
-	# This config-android.h has been modified for later Android releases.
-	cp $HOME/config-android.h ${ACE_ROOT}/ace
+	cp $HOME/config-android.h $ACE_ROOT/ace
 
-	echo '#include "ace/config-android.h"' > ${ACE_ROOT}/ace/config.h
+	echo '#include "ace/config-android.h"' > $ACE_ROOT/ace/config.h
 
 	cp $HOME/platform_macros.GNU-arm \
-		${ACE_ROOT}/include/makeinclude/platform_macros.GNU
+		$ACE_ROOT/include/makeinclude/platform_macros.GNU
 
-	cd ${ACE_ROOT}/bin
+	cp $HOME/platform_android.GNU \
+		$ACE_ROOT/include/makeinclude
+
+	cd $ACE_ROOT/bin
 	ln -sf ../../x86_64/bin/tao_idl
 }
 
 generate_makefiles() {
-	cd ${TAO_ROOT}
-	perl ${ACE_ROOT}/bin/mwc.pl -type gnuace TAO_ACE.mwc
+	cd $TAO_ROOT
+	perl $ACE_ROOT/bin/mwc.pl -type gnuace TAO_ACE.mwc
 
-	cd ${DDS_ROOT}/bin
+	cd $DDS_ROOT/bin
 	ln -sf ../../x86_64/bin/opendds_idl
 
-	cd ${DDS_ROOT}
-	perl ${ACE_ROOT}/bin/mwc.pl DDS.mwc -type gnuace
+	cd $DDS_ROOT
+	perl $ACE_ROOT/bin/mwc.pl DDS.mwc -type gnuace
 }
 
 compile() {
 	echo "calling make -C ace"
-	cd ${ACE_ROOT}
+	cd $ACE_ROOT
 	make -C ace
 
 	echo "calling TAO_ROOT make"
-	cd ${TAO_ROOT}
+	cd $TAO_ROOT
 	make
 
 	echo "calling DDS_ROOT make"
-	cd ${DDS_ROOT}
+	cd $DDS_ROOT
 	make
 
-	cd ${ACE_ROOT}/bin
+	cd $ACE_ROOT/bin
 	ln -sf ../TAO/TAO_IDL/tao_idl 
 }
 
