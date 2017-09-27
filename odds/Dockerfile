@@ -13,6 +13,7 @@ ADD platform_macros.GNU-x86_64 /home/developer
 # ACE 6.3.2 is added to DDS 3.12.
 ADD platform_android.GNU /home/developer
 ADD config-android.h /home/developer
+ADD opendds.patch /home/developer
 
 USER root
 
