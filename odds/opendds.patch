@@ -1,0 +1,28 @@
+diff -Naur arm-tools/ACE_wrappers/include/makeinclude/platform_g++_common.GNU arm-tools.new/ACE_wrappers/include/makeinclude/platform_g++_common.GNU
+--- arm-tools/ACE_wrappers/include/makeinclude/platform_g++_common.GNU	2017-04-20 07:52:06.948646618 +0000
++++ arm-tools.new/ACE_wrappers/include/makeinclude/platform_g++_common.GNU	2017-08-08 20:45:12.102127395 +0000
+@@ -110,6 +110,10 @@
+ # If the platform file didn't already set versioned_so, default to 1.
+ versioned_so ?= 1
+ with_ld ?=
++ifeq ($(versioned_so),0)
++  SOFLAGS += -Wl,-h -Wl,$(SONAME)
++endif
++
+ ifneq ($(versioned_so),0)
+   ifeq ($(with_ld),hpux)
+     SOFLAGS += -Wl,+h -Wl,$(SONAME)
+diff -Naur arm-tools/ACE_wrappers/include/makeinclude/rules.lib.GNU arm-tools.new/ACE_wrappers/include/makeinclude/rules.lib.GNU
+--- arm-tools/ACE_wrappers/include/makeinclude/rules.lib.GNU	2017-04-20 07:52:06.948646618 +0000
++++ arm-tools.new/ACE_wrappers/include/makeinclude/rules.lib.GNU	2017-08-08 20:44:43.769454166 +0000
+@@ -11,6 +11,10 @@
+ #       Library versioning
+ #---------------------------------------------------------------------------
+ 
++ifeq ($(versioned_so),0)
++  SONAME = $(SHLIB)
++endif
++
+ ifneq ($(versioned_so),0)
+   # Turn on symbol versioning. The scheme that we follow is to allow
+   # applications dependent on libraries, with same version numbers (major,
