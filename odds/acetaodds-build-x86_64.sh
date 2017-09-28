@@ -12,8 +12,8 @@ unpack_files() {
 
 	# Prepare source for this build as well as the one to follow for the arm.
 	#local HTTP_AT=http://download.ociweb.com/TAO-2.2a
-	local HTTP_DDS=http://download.ociweb.com/OpenDDS
-	#local HTTP_DDS=download.ociweb.com/OpenDDS/previous-releases
+	#local HTTP_DDS=http://download.ociweb.com/OpenDDS
+	local HTTP_DDS=download.ociweb.com/OpenDDS/previous-releases
 	# This version from Vanderbilt fixes CPU_SET_T conflicts.
     local HTTP_AT=download.dre.vanderbilt.edu/previous_versions
 
@@ -28,8 +28,13 @@ unpack_files() {
 	tar -xvzf ./$FILE_DDS
 }
 
+apply_patches() {
+	cd $HOME
+	patch -p0 < opendds.patch
+}
+
 set_build_env() {
-	cd ACE_wrappers
+	cd $BUILD_TOP/ACE_wrappers
 
 	./MPC/clone_build_tree.pl x86_64
 	cd build/x86_64
@@ -79,6 +84,7 @@ compile() {
 }
 
 unpack_files
+apply_patches
 set_build_env
 configure_ace
 generate_makefiles
